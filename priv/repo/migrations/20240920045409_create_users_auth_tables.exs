@@ -9,6 +9,7 @@ defmodule LawHub.Repo.Migrations.CreateUsersAuthTables do
       add :last_name, :string, null: false
       add :username, :string, null: false
       add :phone_number, :string, null: false
+      add :id_number, :string, null: false
       add :photo, :string
       add :email_validated, :boolean, default: false
       add :number_validated, :boolean, default: false
@@ -19,7 +20,7 @@ defmodule LawHub.Repo.Migrations.CreateUsersAuthTables do
       timestamps()
     end
 
-    create unique_index(:users, [:email, :username])
+    create unique_index(:users, [:email, :username, :id_number])
 
     create table(:users_tokens) do
       add :user_id, references(:users, on_delete: :delete_all), null: false

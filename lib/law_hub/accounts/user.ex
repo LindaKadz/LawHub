@@ -8,6 +8,7 @@ defmodule LawHub.Accounts.User do
     field :username, :string
     field :photo, :string
     field :phone_number, :string
+    field :id_number, :integer
     field :user_type, :string
     field :email_validated, :boolean
     field :number_validated, :boolean
@@ -42,6 +43,7 @@ defmodule LawHub.Accounts.User do
     :user_type, :email_validated, :number_validated, :email, :password])
     |> validate_required_fields()
     |> validate_email()
+    |> validate_id_number()
     |> validate_password(opts)
   end
 
@@ -49,6 +51,13 @@ defmodule LawHub.Accounts.User do
     changeset
     |> validate_required([:first_name, :last_name, :username, :phone_number,
     :user_type])
+  end
+
+  def validate_id_number(changeset) do
+    changeset
+    |> validate_required([:id_number])
+    |> validate_length(:id_number, is: 8)
+    |> unique_constraint(:id_number)
   end
 
   defp validate_email(changeset) do

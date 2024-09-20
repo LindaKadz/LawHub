@@ -7,9 +7,33 @@
     </div>
   <% end %>
 
+  <%= label f, :first_name %>
+  <%= text_input f, :first_name, required: true %>
+  <%= error_tag f, :first_name %>
+
+  <%= label f, :last_name %>
+  <%= text_input f, :last_name, required: true %>
+  <%= error_tag f, :last_name %>
+
+  <%= label f, :username %>
+  <%= text_input f, :username, required: true %>
+  <%= error_tag f, :username %>
+
+  <%= label f, :phone_number %>
+  <%= text_input f, :phone_number, required: true %>
+  <%= error_tag f, :phone_number %>
+
+  <%= label f, :id_number %>
+  <%= text_input f, :id_number, required: true %>
+  <%= error_tag f, :id_number %>
+
   <%= label f, :email %>
   <%= email_input f, :email, required: true %>
   <%= error_tag f, :email %>
+
+  <%= label f, :user_type %>
+  <%= text_input f, :user_type, required: true %>
+  <%= error_tag f, :user_type %>
 
   <%= label f, :password %>
   <%= password_input f, :password, required: true %>

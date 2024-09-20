@@ -14,6 +14,7 @@ defmodule LawHub.AccountsFixtures do
       username: "foobar",
       user_type: "advocate",
       phone_number: "123456789",
+      id_number: "12345389"
       email: unique_user_email(),
       password: valid_user_password()
     })
