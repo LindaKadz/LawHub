@@ -8,9 +8,8 @@ defmodule LawHub.Accounts.User do
     field :username, :string
     field :photo, :string
     field :phone_number, :string
-    field :id_number, :integer
+    field :national_id, :integer
     field :user_type, :string
-    field :email_validated, :boolean
     field :number_validated, :boolean
     field :email, :string
     field :password, :string, virtual: true, redact: true
@@ -40,7 +39,7 @@ defmodule LawHub.Accounts.User do
   def registration_changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, [:first_name, :last_name, :username, :photo, :phone_number,
-    :user_type, :email_validated, :number_validated, :email, :password])
+    :user_type, :number_validated, :email, :password, :national_id])
     |> validate_required_fields()
     |> validate_email()
     |> validate_id_number()
@@ -55,9 +54,12 @@ defmodule LawHub.Accounts.User do
 
   def validate_id_number(changeset) do
     changeset
-    |> validate_required([:id_number])
-    |> validate_length(:id_number, is: 8)
-    |> unique_constraint(:id_number)
+    |> validate_required([:national_id])
+    |> check_constraint(:national_id,
+      name: :national_id_must_be_digits_and_at_least_eight_digits,
+      message: "National ID should be at least 7 digits "
+    )
+    |> unique_constraint(:national_id)
   end
 
   defp validate_email(changeset) do
