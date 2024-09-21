@@ -26,12 +26,7 @@
     </.form>
 
     <p class="mt-10 text-center text-sm text-gray-500">
-      Need an account?
-      <%= link "Sign Up", to: Routes.user_registration_path(@conn, :new), class: "font-semibold leading-6 text-indigo-600 hover:text-indigo-500" %>
-    </p>
-
-     <p class="mt-10 text-center text-sm text-gray-500">
-      Have an account?
+      <%= link "Sign Up", to: Routes.user_registration_path(@conn, :new), class: "font-semibold leading-6 text-indigo-600 hover:text-indigo-500" %> | 
       <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "font-semibold leading-6 text-indigo-600 hover:text-indigo-500" %>
     </p>
   </div>
