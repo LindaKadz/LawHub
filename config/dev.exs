@@ -25,7 +25,8 @@ config :law_hub, LawHubWeb.Endpoint,
   secret_key_base: "RDhrFWJZdexcxqtZyp9Qul0G6f5+vAXc8sQKSw8or5N/TwxPYYbAJGBFTm/jNw7M",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support
