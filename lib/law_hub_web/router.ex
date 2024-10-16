@@ -21,6 +21,9 @@ defmodule LawHubWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/about", PageController, :about
+    get "/policy", PageController, :policy
+    get "/contact", PageController, :contact
   end
 
   # Other scopes may use custom stacks.
