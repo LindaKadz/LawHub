@@ -63,51 +63,32 @@
         </div>
         <div class="-mr-2 flex items-center sm:hidden">
           <!-- Mobile menu button -->
-          <button type="button" onclick="showMenu()" class="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-controls="mobile-menu" aria-expanded="false">
+          <button type="button" onclick="show()" class="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-controls="mobile-menu" aria-expanded="false">
             <span class="absolute -inset-0.5"></span>
             <span class="sr-only">Open main menu</span>
             <!-- Menu open: "hidden", Menu closed: "block" -->
-            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
-            <!-- Menu open: "block", Menu closed: "hidden" -->
-            <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
+             <%= if @current_user.photo == nil do %>
+               <svg class="h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                 <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
+               </svg>
+             <% else %>
+              <img class="h-8 w-8 rounded-full bg-gray-50" src={URI.decode(@current_user.photo)} alt="Profile">
+             <% end %>
           </button>
         </div>
       </div>
     </div>
 
     <!-- Mobile menu, show/hide based on menu state. -->
-    <div class="sm:hidden">
+    <div class="sm:hidden" style="display:none" id="mobileNavBar">
       <div class="space-y-1 pb-3 pt-2">
-        <!-- Current: "border-indigo-500 bg-indigo-50 text-indigo-700", Default: "border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800" -->
-        <a href="#" class="block border-l-4 border-indigo-500 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-indigo-700" aria-current="page">Dashboards</a>
-        <a href="#" class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800">Team</a>
-        <a href="#" class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800">Projects</a>
-        <a href="#" class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800">Calendar</a>
-      </div>
-      <div class="border-t border-gray-200 pb-3 pt-4">
-        <div class="flex items-center px-4">
-          <div class="flex-shrink-0">
-             <%= if @current_user.photo == nil do %>
-                <svg class="h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
-                </svg>
-              <% else %>
-               <img class="h-8 w-8 rounded-full bg-gray-50" src={URI.decode(@current_user.photo)} alt="Profile">
-              <% end %>
-          </div>
-          <div class="ml-3">
-            <div class="text-base font-medium text-gray-800"><%= @current_user.username %></div>
-          </div>
-        </div>
-        <div class="mt-3 space-y-1">
-          <a href="/users/profile" class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">My Profile</a>
-          <a href="/users/settings" class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">Settings</a>
-          <a><%= link "Sign Out", to: Routes.user_session_path(@conn, :delete), method: "delete", class: "block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 button", role: "menuitem", tabindex: "-1", id: "user-menu-item-2"%></a>
-        </div>
+        <a href="/dashboard" class="block border-l-4 py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300">Dashboard</a>
+        <a href="/affidavits" class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800">Team</a>
+        <a href="/agreeements" class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800">Projects</a>
+        <a href="/meetings" class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800">Calendar</a>
+        <a href="/users/profile" class="block px-4 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">My Profile</a>
+        <a href="/users/settings" class="block px-4 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">Settings</a>
+        <a><%= link "Sign Out", to: Routes.user_session_path(@conn, :delete), method: "delete", class: "block px-4 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800 button", role: "menuitem", tabindex: "-1", id: "user-menu-item-2"%></a>
       </div>
     </div>
   </nav>
@@ -283,9 +264,14 @@ function hideNavbar() {
 }
 
 function show() {
-  var nav = document.getElementById("mobile_nav");
+  var mobNav = document.getElementById("mobileNavBar");
 
-  nav.style.display = "block";
+  if (mobNav.style.display === "none") {
+    mobNav.style.display = "block";
+
+  } else {
+    mobNav.style.display = "none";
+  }
 }
 
 function showMenu() {
